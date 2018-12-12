@@ -1,8 +1,8 @@
 from django.urls import path, include
 from django.views.generic.base import TemplateView
-from .views import PostView
+from .views import EntryView
 
 
 urlpatterns = [
-    path('', PostView.as_view(), name='new_post'),
+    path('', EntryView.as_view(), name='new_post'),
 ]

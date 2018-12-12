@@ -1,10 +1,10 @@
 from django.views.generic.edit import FormView
-from .forms import PostForm
+from .forms import EntryForm
 
-class PostView(FormView):
+class EntryView(FormView):
 
-    template_name = 'mainsite/newpost.html'
-    form_class = PostForm
+    template_name = 'blog/newpost.html'
+    form_class = EntryForm
     success_url = 'home'
 
     def form_valid(self, form):
