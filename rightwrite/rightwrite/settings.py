@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'blog',
     'corrections',
+    'language',
+    'friends',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from blog.models import Language
+from language.models import Language
 
 
 class CustomUser(AbstractUser):
@@ -27,5 +27,5 @@ class UserLanguage(models.Model):
     )
 
     user = models.ForeignKey('CustomUser', on_delete=models.CASCADE)
-    language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE, related_name='user_language')
     proficiency = models.CharField(max_length=2, choices=PROFICIENCY_CHOICES)
