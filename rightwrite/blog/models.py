@@ -7,7 +7,7 @@ class Entry(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     text = models.TextField()
-    language = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='entry_language')
+    language = models.ForeignKey('Language', on_delete=models.CASCADE, related_name='entries')
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
