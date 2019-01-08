@@ -8,4 +8,5 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('users/', include('django.contrib.auth.urls')),
     path('blog/', include('blog.urls')),
+    path('friendship/', include('friendship.urls')),
 ]

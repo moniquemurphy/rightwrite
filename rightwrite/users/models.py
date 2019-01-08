@@ -7,7 +7,6 @@ class CustomUser(AbstractUser):
 
     num_entries_corrected = models.IntegerField(default=0, blank=True)
     points = models.IntegerField(default=0, blank=True)
-    friends = models.ManyToManyField('self')
 
     def __str__(self):
         return self.email

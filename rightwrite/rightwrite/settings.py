@@ -37,11 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_registration',
     'language',
     'users.apps.UsersConfig',
     'blog',
     'corrections',
-    'friends',
+    'friendship',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
