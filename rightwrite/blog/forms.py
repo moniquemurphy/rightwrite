@@ -5,4 +5,5 @@ class EntryForm(forms.ModelForm):
 
     class Meta:
         model = Entry
-        fields = ('user', 'title', 'language', 'text')
+        fields = ('user', 'title', 'text')
+        # add 'language' back in here

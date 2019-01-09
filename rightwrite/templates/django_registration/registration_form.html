@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} Register for RightWrite {% endblock %}
+
+{% block content %}
+
+    <p>Once you register, you will be sent an activation link in your email. You must click this link to activate your
+        account.</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+
+    </form>
+
+{% endblock %}
