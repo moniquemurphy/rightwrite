@@ -18,4 +18,5 @@ class Correction(models.Model):
 
 class CorrectedSentence(models.Model):
     original_sentence = models.ForeignKey(EntrySentence, on_delete=models.CASCADE)
-    corrected_sentence = models.TextField()
+    corrected_sentence = models.ForeignKey(EntrySentence, on_delete=models.CASCADE)
+
