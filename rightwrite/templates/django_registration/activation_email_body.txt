@@ -1,0 +1,4 @@
+You've created an account at RightWrite! You have {{ expiration_days }} days to activate before this link becomes
+inactive.
+
+{{ scheme }}://{{ site }}/accounts/activate/{{ activation_key }}

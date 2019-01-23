@@ -5,10 +5,12 @@
 {% block content %}
 {% if user.is_authenticated %}
   Hi {{ user.username }}!
+  <p><a href="{% url 'friendship_view_friends' username=user.username%}">my friends</a></p>
+  <p><a href="{% url 'create_entry' %}">create an entry</a></p>
   <p><a href="{% url 'logout' %}">logout</a></p>
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">login</a> |
-  <a href="{% url 'signup' %}">signup</a>
+  <a href="{% url 'django_registration_register' %}">register</a>
 {% endif %}
 {% endblock %}

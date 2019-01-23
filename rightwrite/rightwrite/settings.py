@@ -137,3 +137,12 @@ LOGOUT_REDIRECT_URL = 'home'
 # Django Registration Settings
 
 ACCOUNT_ACTIVATION_DAYS = 7
+
+# Email settings
+
+DEFAULT_FROM_EMAIL = "testactivate@test.com"
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+
+

@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from language.models import Language
 
@@ -9,7 +9,7 @@ class CustomUser(AbstractUser):
     points = models.IntegerField(default=0, blank=True)
 
     def __str__(self):
-        return self.email
+        return self.username
 
 
 class UserLanguage(models.Model):

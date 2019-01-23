@@ -17,6 +17,6 @@ class Correction(models.Model):
 
 
 class CorrectedSentence(models.Model):
-    original_sentence = models.ForeignKey(EntrySentence, on_delete=models.CASCADE)
-    corrected_sentence = models.ForeignKey(EntrySentence, on_delete=models.CASCADE)
+    original_sentence = models.ForeignKey(EntrySentence, on_delete=models.CASCADE, related_name='original_sentences')
+    corrected_sentence = models.ForeignKey(EntrySentence, on_delete=models.CASCADE, related_name='corrected_sentences')
 

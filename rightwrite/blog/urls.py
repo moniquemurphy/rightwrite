@@ -4,5 +4,5 @@ from .views import EntryView
 
 
 urlpatterns = [
-    path('', EntryView.as_view(), name='new_post'),
+    path('', EntryView.as_view(), name='create_entry'),
 ]
