@@ -11,6 +11,7 @@ urlpatterns = [
          name='django_registration_register'),
     path('accounts/', include('django_registration.backends.activation.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('user_test/', include('users.urls')),
     path('blog/', include('blog.urls')),
     path('friendship/', include('friendship.urls')),
 ]

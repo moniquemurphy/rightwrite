@@ -9,8 +9,6 @@ class EntryView(FormView):
     success_url = reverse_lazy('create_entry')
 
     def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
         form.save()
         return super().form_valid(form)
 

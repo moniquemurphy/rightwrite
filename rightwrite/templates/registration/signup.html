@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}User Signup{% endblock %}
+
+{% block content %}
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form id="user_signup_form" method="post">
+    {% csrf_token %}
+    {{ user_signup_form.as_p }}
+    <input type="submit" name="{{ user_signup_form.prefix }}" value="Sign Up 1" />
+    </form>
+
+    <form id="user_language_formset" method="post">
+    {% csrf_token %}
+    {% for form in user_language_formset %}
+        {{ form.as_p }}
+    {% endfor %}
+    <input type="submit" name="{{ user_language.prefix }}" value="Sign Up 2" />
+    </form>
+
+{% endblock %}
