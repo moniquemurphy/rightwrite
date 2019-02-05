@@ -13,10 +13,10 @@ class EntryForm(forms.ModelForm):
         super(EntryForm, self).__init__(*args, **kwargs)
 
     def save(self, commit=True):
-        form = super(EntryForm, self).save(commit=False)
+        instance = super(EntryForm, self).save(commit=False)
         # save the user on it here
-        form.user = self.user
+        instance.user = self.user
         if commit:
-            form.save()
-        return form
+            instance.save()
+        return instance
 
