@@ -19,9 +19,19 @@
     <!-- this has to be here to use the formset -->
     {{ user_language_formset.management_form }}
 
+    {% if user_language_formset.non_form_errors %}
+        {% for error in user_language_formset.non_form_errors %}
+            {{ error }}
+        {% endfor %}
+    {% endif %}
+
     {% for form in user_language_formset %}
+        {% if form.errors %}
+        {{ error }}
+        {% endif %}
         {{ form.as_p }}
     {% endfor %}
+
 
     <input type="submit" value="Sign Up" />
     </form>

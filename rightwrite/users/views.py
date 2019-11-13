@@ -39,7 +39,6 @@ class UserSignupView(TemplateView):
 
         if context['user_language_formset'].is_valid():
             print("valid formset!")
-
         # if context['user_signup_form'].is_valid():
         #     print('is valid')
             # this works but i don't want to clutter up the db

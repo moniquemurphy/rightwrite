@@ -33,9 +33,8 @@ class BaseUserLanguageFormset(BaseFormSet):
                 code='duplicate_languages'
             )
 
-        ### stopped here: validation error isn't coming back to the form and rendering
+        ### stopped here: want to render the error ABOVE the formset
         if not 'NA' in proficiencies:
-            print('na not in proficiencies')
             raise forms.ValidationError(
                 'You must choose at least one native language.',
                 code='no_native_language'
