@@ -3,21 +3,31 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
 from django.forms import formset_factory
-from .forms import CustomUserCreationForm, CustomUserLanguageForm
+from .forms import CustomUserCreationForm, CustomUserLanguageForm, BaseUserLanguageFormset
+from .helpers import *
 
+
+CustomUserLanguageFormset = formset_factory(CustomUserLanguageForm, formset=BaseUserLanguageFormset, extra=2)
+
+class TestingView(TemplateView):
+    template_name = 'mainsite/testing.html'
+
+    # https://whoisnicoleharris.com/2015/01/06/implementing-django-formsets.html
 
 class UserSignupView(TemplateView):
     template_name = 'registration/signup.html'
 
-    part_one_form = CustomUserCreationForm(prefix='user_signup')
-    formset_fun_times = CustomUserLanguageFormset = formset_factory(CustomUserLanguageForm, extra=2)
-
-
     def get_context_data(self, **kwargs):
         context = super(UserSignupView, self).get_context_data(**kwargs)
 
-        context['user_signup_form'] = self.part_one_form
-        context['user_language_formset'] = self.formset_fun_times
+        if 'request' in kwargs:
+            data = kwargs['request'].POST
+            # context['user_signup_form'] = CustomUserCreationForm(prefix='user_signup', data=data)
+            context['user_language_formset'] = CustomUserLanguageFormset(prefix='user_language', data=data)
+        else:
+            # context['user_signup_form'] = CustomUserCreationForm(prefix='user_signup')
+            # user = context['user_signup_form'].instance
+            context['user_language_formset'] = CustomUserLanguageFormset(prefix='user_language')
 
         return context
 
@@ -25,22 +35,19 @@ class UserSignupView(TemplateView):
         context = self.get_context_data(request=request, **kwargs)
 
         post_data = request.POST or None
-
         print(post_data)
 
-        if self.part_one_form.is_valid():
-            print('is valid')
-        else:
-            print('is not valid')
-            print(context['user_signup_form'].errors)
+        if context['user_language_formset'].is_valid():
+            print("valid formset!")
 
-        # for form in self.formset_fun_times:
-        #     if form.is_valid():
-        #         print('at least one form of the second part is valid')
-        #     else:
-        #         print('not valid: ')
-        #         for key, value in form.errors:
-        #             print(key, value)
-        #     messages.error(self.request, 'Error encountered: Please see below')
+        # if context['user_signup_form'].is_valid():
+        #     print('is valid')
+            # this works but i don't want to clutter up the db
+            # context['user_signup_form'].save()
+        # else:
+        #     print('is not valid')
+        #     print(context['user_signup_form'].errors)
+
+        # need to check if there are at least two languages included! One must be native language
 
         return self.render_to_response(context)

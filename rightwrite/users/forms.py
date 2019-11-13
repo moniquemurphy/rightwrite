@@ -6,6 +6,42 @@ from .models import CustomUser, UserLanguage
 from language.models import Language
 
 
+class BaseUserLanguageFormset(BaseFormSet):
+    def clean(self):
+        """Adds validation to make sure that at least one native language and one foreign language was included and that
+        there are no duplicates"""
+        if any(self.errors):
+            return
+
+        print("hit the clean method")
+        languages = []
+        proficiencies = []
+        language_duplicates = False
+
+        for form in self.forms:
+            if form.cleaned_data:
+                print(form.cleaned_data)
+                if form.cleaned_data['language'] in languages:
+                    language_duplicates = True
+                languages.append(form.cleaned_data['language'])
+
+                proficiencies.append(form.cleaned_data['proficiency'])
+
+        if language_duplicates:
+            raise forms.ValidationError(
+                'You may not list the same language twice.',
+                code='duplicate_languages'
+            )
+
+        ### stopped here: validation error isn't coming back to the form and rendering
+        if not 'NA' in proficiencies:
+            print('na not in proficiencies')
+            raise forms.ValidationError(
+                'You must choose at least one native language.',
+                code='no_native_language'
+            )
+
+
 class CustomUserCreationForm(UserCreationForm):
 
     class Meta(RegistrationForm.Meta):
@@ -40,14 +76,19 @@ class CustomUserLanguageForm(forms.ModelForm):
         model = UserLanguage
         fields = ('language', 'proficiency')
 
+
     # def __init__(self, *args, **kwargs):
     #     self.request = kwargs.pop('request')
     #     self.user = self.request.user
     #     super(CustomUserLanguageForm, self).__init__(**kwargs)
     #
-    # def save(self, commit=True):
-    #     form = super(CustomUserLanguageForm, self).save(commit=False)
-    #     form.user = self.user
-    #     if commit:
-    #         form.save()
-    #     return form
+    def test(self):
+        print(self.cleaned_data)
+
+    def save(self, commit=True):
+        form = super(CustomUserLanguageForm, self).save(commit=False)
+        form.user = self.user
+        if commit:
+            form.save()
+        return form
+
