@@ -13,7 +13,6 @@ class BaseUserLanguageFormset(BaseFormSet):
         if any(self.errors):
             return
 
-        print("hit the clean method")
         languages = []
         proficiencies = []
         language_duplicates = False
@@ -33,10 +32,9 @@ class BaseUserLanguageFormset(BaseFormSet):
                 code='duplicate_languages'
             )
 
-        ### stopped here: want to render the error ABOVE the formset
-        if not 'NA' in proficiencies:
+        if 'NA' not in proficiencies:
             raise forms.ValidationError(
-                'You must choose at least one native language.',
+                'You must choose \'Native Speaker\' for at least one language.',
                 code='no_native_language'
             )
 

@@ -14,7 +14,6 @@
 
     <form id="user_signup_form" method="post">
     {% csrf_token %}
-    <!--{{ user_signup_form.as_p }}-->
 
     <!-- this has to be here to use the formset -->
     {{ user_language_formset.management_form }}
@@ -24,6 +23,10 @@
             {{ error }}
         {% endfor %}
     {% endif %}
+
+    {{ user_signup_form.as_p }}
+
+
 
     {% for form in user_language_formset %}
         {% if form.errors %}
