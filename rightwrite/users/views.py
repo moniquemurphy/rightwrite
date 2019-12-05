@@ -35,7 +35,6 @@ class UserSignupView(TemplateView):
         context = self.get_context_data(request=request, **kwargs)
 
         post_data = request.POST or None
-        print(post_data)
 
         if context['user_signup_form'].is_valid() and context['user_language_formset'].is_valid():
             context['user_signup_form'].save()
@@ -43,4 +42,5 @@ class UserSignupView(TemplateView):
                 form.user = context['user_signup_form'].instance
                 form.save()
 
+        # redirect to login page?
         return self.render_to_response(context)

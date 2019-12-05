@@ -32,9 +32,9 @@ class BaseUserLanguageFormset(BaseFormSet):
                 code='duplicate_languages'
             )
 
-        if not 'NA' in proficiencies:
+        if 'NA' not in proficiencies:
             raise forms.ValidationError(
-                'You must choose at least one native language.',
+                'You must choose \'Native Speaker\' for at least one language.',
                 code='no_native_language'
             )
 
