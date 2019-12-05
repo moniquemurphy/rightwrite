@@ -22,11 +22,11 @@ class UserSignupView(TemplateView):
 
         if 'request' in kwargs:
             data = kwargs['request'].POST
-            # context['user_signup_form'] = CustomUserCreationForm(prefix='user_signup', data=data)
+            context['user_signup_form'] = CustomUserCreationForm(prefix='user_signup', data=data)
             context['user_language_formset'] = CustomUserLanguageFormset(prefix='user_language', data=data)
         else:
-            # context['user_signup_form'] = CustomUserCreationForm(prefix='user_signup')
-            # user = context['user_signup_form'].instance
+            context['user_signup_form'] = CustomUserCreationForm(prefix='user_signup')
+            user = context['user_signup_form'].instance
             context['user_language_formset'] = CustomUserLanguageFormset(prefix='user_language')
 
         return context
@@ -37,16 +37,10 @@ class UserSignupView(TemplateView):
         post_data = request.POST or None
         print(post_data)
 
-        if context['user_language_formset'].is_valid():
-            print("valid formset!")
-        # if context['user_signup_form'].is_valid():
-        #     print('is valid')
-            # this works but i don't want to clutter up the db
-            # context['user_signup_form'].save()
-        # else:
-        #     print('is not valid')
-        #     print(context['user_signup_form'].errors)
-
-        # need to check if there are at least two languages included! One must be native language
+        if context['user_signup_form'].is_valid() and context['user_language_formset'].is_valid():
+            context['user_signup_form'].save()
+            for form in context['user_language_formset']:
+                form.user = context['user_signup_form'].instance
+                form.save()
 
         return self.render_to_response(context)

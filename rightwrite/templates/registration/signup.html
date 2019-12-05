@@ -14,14 +14,14 @@
 
     <form id="user_signup_form" method="post">
     {% csrf_token %}
-    <!--{{ user_signup_form.as_p }}-->
+    {{ user_signup_form.as_p }}
 
     <!-- this has to be here to use the formset -->
     {{ user_language_formset.management_form }}
 
     {% if user_language_formset.non_form_errors %}
         {% for error in user_language_formset.non_form_errors %}
-            {{ error }}
+        <li class="error">{{ error }}</li>
         {% endfor %}
     {% endif %}
 
