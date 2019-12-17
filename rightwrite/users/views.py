@@ -3,12 +3,9 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormMixin
 from django.forms import formset_factory
-from .forms import CustomUserCreationForm, CustomUserLanguageForm, BaseUserLanguageFormset
+from .forms import CustomUserCreationForm, CustomUserLanguageForm, UserLanguageFormset
 from .helpers import *
 
-
-CustomUserLanguageFormset = formset_factory(CustomUserLanguageForm, formset=BaseUserLanguageFormset, extra=2)
-# change this to a model formset, move to forms.py and then import here
 
 class TestingView(TemplateView):
     template_name = 'mainsite/testing.html'
@@ -24,11 +21,11 @@ class UserSignupView(TemplateView):
         if 'request' in kwargs:
             data = kwargs['request'].POST
             context['user_signup_form'] = CustomUserCreationForm(prefix='user_signup', data=data)
-            context['user_language_formset'] = CustomUserLanguageFormset(prefix='user_language', data=data)
+            context['user_language_formset'] = UserLanguageFormset(prefix='user_language', data=data)
         else:
             context['user_signup_form'] = CustomUserCreationForm(prefix='user_signup')
             user = context['user_signup_form'].instance
-            context['user_language_formset'] = CustomUserLanguageFormset(prefix='user_language')
+            context['user_language_formset'] = UserLanguageFormset(prefix='user_language')
 
         return context
 

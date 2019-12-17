@@ -1,13 +1,44 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django_registration.forms import RegistrationForm
-from django.forms import BaseFormSet, formset_factory
+from django.forms import BaseFormSet, formset_factory, inlineformset_factory
 from .models import CustomUser, UserLanguage
 from language.models import Language
 
 # https://gist.github.com/freakboy3742/41f0cb287e65617930e4e9686b01e81a
 
-class BaseUserLanguageFormset(BaseFormSet): # this will inherit from model formset factory
+
+class CustomUserLanguageForm(forms.ModelForm):
+
+    class Meta:
+        model = UserLanguage
+        fields = ('language', 'proficiency')
+
+
+    # def __init__(self, user, *args, **kwargs):
+    #     self.user = user
+    #     super(CustomUserLanguageForm, self).__init__(**kwargs)
+    #
+    def test(self):
+        print(self.cleaned_data)
+
+    def save(self, commit=True):
+        form = super(CustomUserLanguageForm, self).save(commit=False)
+        form.user = self.user
+        if commit:
+            form.save()
+        return form
+
+
+BaseUserLanguageFormset = inlineformset_factory(
+                        parent_model=CustomUser,
+                        model=UserLanguage,
+                        form=CustomUserLanguageForm,
+                        extra=2,
+                        can_delete=False,
+                        fk_name='user')
+
+class UserLanguageFormset(BaseUserLanguageFormset): # this will inherit from model formset factory
     def clean(self):
         """Adds validation to make sure that at least one native language and one foreign language was included and that
         there are no duplicates"""
@@ -72,26 +103,3 @@ class CustomUserChangeForm(UserChangeForm):
     #     if commit:
     #         form.save()
     #     return form
-
-
-class CustomUserLanguageForm(forms.ModelForm):
-
-    class Meta:
-        model = UserLanguage
-        fields = ('language', 'proficiency')
-
-
-    # def __init__(self, user, *args, **kwargs):
-    #     self.user = user
-    #     super(CustomUserLanguageForm, self).__init__(**kwargs)
-    #
-    def test(self):
-        print(self.cleaned_data)
-
-    def save(self, commit=True):
-        form = super(CustomUserLanguageForm, self).save(commit=False)
-        form.user = self.user
-        if commit:
-            form.save()
-        return form
-
