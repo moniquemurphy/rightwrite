@@ -8,6 +8,7 @@ from .helpers import *
 
 
 CustomUserLanguageFormset = formset_factory(CustomUserLanguageForm, formset=BaseUserLanguageFormset, extra=2)
+# change this to a model formset, move to forms.py and then import here
 
 class TestingView(TemplateView):
     template_name = 'mainsite/testing.html'
