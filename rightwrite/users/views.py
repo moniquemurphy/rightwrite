@@ -1,16 +1,8 @@
-from django.urls import reverse_lazy
-from django.contrib import messages
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView
-from django.views.generic.edit import FormMixin
-from django.forms import formset_factory
-from .forms import CustomUserCreationForm, CustomUserLanguageForm, UserLanguageFormset
-from .helpers import *
+from .forms import CustomUserCreationForm, UserLanguageFormset
 
-
-class TestingView(TemplateView):
-    template_name = 'mainsite/testing.html'
-
-    # https://whoisnicoleharris.com/2015/01/06/implementing-django-formsets.html
 
 class UserSignupView(TemplateView):
     template_name = 'registration/signup.html'
@@ -22,6 +14,7 @@ class UserSignupView(TemplateView):
             data = kwargs['request'].POST
             context['user_signup_form'] = CustomUserCreationForm(prefix='user_signup', data=data)
             context['user_language_formset'] = UserLanguageFormset(prefix='user_language', data=data)
+            print(data)
         else:
             context['user_signup_form'] = CustomUserCreationForm(prefix='user_signup')
             user = context['user_signup_form'].instance
@@ -40,5 +33,6 @@ class UserSignupView(TemplateView):
                 form.user = context['user_signup_form'].instance
                 form.save()
 
-        # redirect to login page?
+            return HttpResponseRedirect(reverse('home'))
+
         return self.render_to_response(context)

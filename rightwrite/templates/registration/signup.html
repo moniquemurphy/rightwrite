@@ -2,6 +2,26 @@
 
 {% block title %}User Signup{% endblock %}
 
+{% block js %}
+
+    {{ block.super }}
+
+    <script>
+        $( document ).ready(function() {
+            $('#add_language').click(function() {
+                // what is the id that has the total forms number in it?
+                // https://simpleit.rocks/python/django/dynamic-add-form-with-add-button-in-django-modelformset-template/
+                var form_idx = $('#user_language-TOTAL_FORMS').val();
+                console.log(form_idx);
+
+                $('#user_language_formset').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+                $('#user_language_formset-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+            });
+        });
+
+    </script>
+{% endblock %}
+
 {% block content %}
 
     {% if messages %}
@@ -26,13 +46,21 @@
 
     {{ user_signup_form.as_p }}
 
-    {% for form in user_language_formset %}
-        {% if form.errors %}
-        {{ error }}
-        {% endif %}
-        {{ form.as_p }}
-    {% endfor %}
+    <div id="user_language_formset">
+        {% for form in user_language_formset %}
+            {% if form.errors %}
+            {{ error }}
+            {% endif %}
+            {{ form.as_p }}
+        {% endfor %}
 
+        <input type="button" value="Add a Language" id="add_language">
+
+        <div id="empty_form" class="no_display">
+            {{ user_language_formset.empty_form }}
+        </div>
+
+    </div>
 
     <input type="submit" value="Sign Up" />
     </form>

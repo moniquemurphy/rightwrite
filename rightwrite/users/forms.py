@@ -14,14 +14,6 @@ class CustomUserLanguageForm(forms.ModelForm):
         model = UserLanguage
         fields = ('language', 'proficiency')
 
-
-    # def __init__(self, user, *args, **kwargs):
-    #     self.user = user
-    #     super(CustomUserLanguageForm, self).__init__(**kwargs)
-    #
-    def test(self):
-        print(self.cleaned_data)
-
     def save(self, commit=True):
         form = super(CustomUserLanguageForm, self).save(commit=False)
         form.user = self.user
